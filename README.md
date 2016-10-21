@@ -10,10 +10,7 @@ A ionic 1/2 image to be used with Gitlab CI
 - https://github.com/tippiq/docker-protractor
 
 ### Features
-- Node 6.6
-- npm 3.10.3
-- ionic 2.1.0
-- cordova 5.3.1 
+- Node 6.9.1
 - android-23
 - Ready to run Google Chrome for e2e tests
 - Ruby 2.2 (usefull for scss-lint)
