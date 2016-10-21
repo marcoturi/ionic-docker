@@ -3,10 +3,7 @@ MAINTAINER marco [dot] turi [at] hotmail [dot] it
 
 ENV DEBIAN_FRONTEND=noninteractive \
     ANDROID_HOME=/opt/android-sdk-linux \
-    NODE_VERSION=6.6.0 \
-    NPM_VERSION=3.10.3 \
-    IONIC_VERSION=2.1.0 \
-    CORDOVA_VERSION=5.3.1 \
+    NODE_VERSION=6.9.1 \
     # Fix for the issue with Selenium, as described here:
     # https://github.com/SeleniumHQ/docker-selenium/issues/87
     DBUS_SESSION_BUS_ADDRESS=/dev/null
@@ -17,8 +14,6 @@ RUN apt-get update &&  \
     curl --retry 3 -SLO "http://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-x64.tar.gz" && \
     tar -xzf "node-v$NODE_VERSION-linux-x64.tar.gz" -C /usr/local --strip-components=1 && \
     rm "node-v$NODE_VERSION-linux-x64.tar.gz" && \
-    npm install -g npm@"$NPM_VERSION" && \
-    npm install -g  cordova@"$CORDOVA_VERSION" ionic@"$IONIC_VERSION" && \
     npm cache clear && \
     gem install sass && \
     wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb && \
