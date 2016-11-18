@@ -11,12 +11,13 @@ A ionic 1/2 image to be used with Gitlab CI
 
 ### Features
 - Node 6.9.1
-- npm 3.10.8
-- ionic 2.1.1
-- cordova 5.3.1 
+- Npm 3.10.8
+- Ionic 2.1.12
+- Cordova 5.3.1 
 - android-23
 - Ready to run Google Chrome for e2e tests
 - Ruby 2.2 (usefull for scss-lint)
+- Yarn 0.17.3
 
 ##Usage
 
