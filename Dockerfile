@@ -5,7 +5,7 @@ ENV DEBIAN_FRONTEND=noninteractive \
     ANDROID_HOME=/opt/android-sdk-linux \
     NODE_VERSION=6.9.2 \
     NPM_VERSION=3.10.9 \
-    IONIC_VERSION=2.1.15 \
+    IONIC_VERSION=2.1.17 \
     CORDOVA_VERSION=6.4.0 \
     YARN_VERSION=0.17.10 \
     # Fix for the issue with Selenium, as described here:
