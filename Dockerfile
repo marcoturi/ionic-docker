@@ -3,11 +3,11 @@ MAINTAINER marco [dot] turi [at] hotmail [dot] it
 
 ENV DEBIAN_FRONTEND=noninteractive \
     ANDROID_HOME=/opt/android-sdk-linux \
-    NODE_VERSION=6.9.2 \
-    NPM_VERSION=3.10.9 \
-    IONIC_VERSION=2.1.17 \
+    NODE_VERSION=6.9.3 \
+    NPM_VERSION=3.10.10 \
+    IONIC_VERSION=2.1.18 \
     CORDOVA_VERSION=6.4.0 \
-    YARN_VERSION=0.17.10 \
+    YARN_VERSION=0.18.1 \
     # Fix for the issue with Selenium, as described here:
     # https://github.com/SeleniumHQ/docker-selenium/issues/87
     DBUS_SESSION_BUS_ADDRESS=/dev/null
