@@ -15,9 +15,9 @@ ENV DEBIAN_FRONTEND=noninteractive \
 # Install basics
 RUN apt-get update &&  \
     apt-get install -y git wget curl unzip ruby build-essential xvfb && \
-    curl --retry 3 -SLO "http://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-x64.tar.gz" && \
-    tar -xzf "node-v$NODE_VERSION-linux-x64.tar.gz" -C /usr/local --strip-components=1 && \
-    rm "node-v$NODE_VERSION-linux-x64.tar.gz" && \
+    curl -sL https://deb.nodesource.com/setup_6.x | bash - && \
+    apt-get update &&  \
+    apt-get install -y nodejs && \
     npm install -g npm@"$NPM_VERSION" cordova@"$CORDOVA_VERSION" ionic@"$IONIC_VERSION" yarn@"$YARN_VERSION" && \
     npm cache clear && \
     gem install sass && \
