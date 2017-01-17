@@ -3,11 +3,11 @@ MAINTAINER marco [dot] turi [at] hotmail [dot] it
 
 ENV DEBIAN_FRONTEND=noninteractive \
     ANDROID_HOME=/opt/android-sdk-linux \
-    NODE_VERSION=6.9.3 \
+    NODE_VERSION=6.9.4 \
     NPM_VERSION=3.10.10 \
-    IONIC_VERSION=2.1.18 \
+    IONIC_VERSION=2.2.1 \
     CORDOVA_VERSION=6.4.0 \
-    YARN_VERSION=0.18.1 \
+    YARN_VERSION=0.19.1 \
     # Fix for the issue with Selenium, as described here:
     # https://github.com/SeleniumHQ/docker-selenium/issues/87
     DBUS_SESSION_BUS_ADDRESS=/dev/null
@@ -15,9 +15,9 @@ ENV DEBIAN_FRONTEND=noninteractive \
 # Install basics
 RUN apt-get update &&  \
     apt-get install -y git wget curl unzip ruby build-essential xvfb && \
-    curl -sL https://deb.nodesource.com/setup_6.x | bash - && \
-    apt-get update &&  \
-    apt-get install -y nodejs && \
+    curl --retry 3 -SLO "http://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-x64.tar.gz" && \
+    tar -xzf "node-v$NODE_VERSION-linux-x64.tar.gz" -C /usr/local --strip-components=1 && \
+    rm "node-v$NODE_VERSION-linux-x64.tar.gz" && \
     npm install -g npm@"$NPM_VERSION" cordova@"$CORDOVA_VERSION" ionic@"$IONIC_VERSION" yarn@"$YARN_VERSION" && \
     npm cache clear && \
     gem install sass && \
