@@ -1,10 +1,10 @@
-FROM     ubuntu:14.04.4
+FROM debian:jessie
 MAINTAINER marco [dot] turi [at] hotmail [dot] it
 
 ENV DEBIAN_FRONTEND=noninteractive \
     ANDROID_HOME=/opt/android-sdk-linux \
     NODE_VERSION=6.10.1 \
-    NPM_VERSION=4.4.4 \
+    NPM_VERSION=5.0.1 \
     IONIC_VERSION=3.3.0 \
     CORDOVA_VERSION=6.4.0 \
     YARN_VERSION=0.24.5 \
@@ -12,7 +12,7 @@ ENV DEBIAN_FRONTEND=noninteractive \
     # https://github.com/SeleniumHQ/docker-selenium/issues/87
     DBUS_SESSION_BUS_ADDRESS=/dev/null
 
-# Install basics 
+# Install basics
 RUN apt-get update &&  \
     apt-get install -y git wget curl unzip ruby build-essential xvfb && \
     curl -sL https://deb.nodesource.com/setup_6.x | bash - && \
@@ -30,17 +30,16 @@ RUN apt-get update &&  \
     mkdir -p /root/.cache/yarn/ && \
 
 # Font libraries
-    apt-get -qqy install fonts-ipafont-gothic xfonts-100dpi xfonts-75dpi xfonts-cyrillic xfonts-scalable ttf-ubuntu-font-family libfreetype6 libfontconfig && \
+    apt-get -qqy install fonts-ipafont-gothic xfonts-100dpi xfonts-75dpi xfonts-cyrillic xfonts-scalable libfreetype6 libfontconfig && \
 
 # install python-software-properties (so you can do add-apt-repository)
     apt-get update && apt-get install -y -q python-software-properties software-properties-common  && \
-    add-apt-repository ppa:webupd8team/java -y && \
+    add-apt-repository "deb http://ppa.launchpad.net/webupd8team/java/ubuntu xenial main" -y && \
     echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | /usr/bin/debconf-set-selections && \
     apt-get update && apt-get -y install oracle-java8-installer && \
 
 # Ruby
-    apt-add-repository ppa:brightbox/ruby-ng -y && \
-    apt-get update && apt-get install -y -q ruby2.2 && \
+    apt-get update && apt-get install -y -q ruby && \
 
 #ANDROID STUFF
     echo ANDROID_HOME="${ANDROID_HOME}" >> /etc/environment && \
@@ -52,20 +51,21 @@ RUN apt-get update &&  \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
 
 # Install Android SDK
-    cd /opt && \
-    wget --output-document=android-sdk.tgz --quiet http://dl.google.com/android/android-sdk_r24.4.1-linux.tgz && \
-    tar xzf android-sdk.tgz && \
-    rm -f android-sdk.tgz && \
+    mkdir  /opt/android-sdk-linux && cd /opt/android-sdk-linux && \
+    wget --output-document=android-tools-sdk.zip --quiet https://dl.google.com/android/repository/tools_r25.2.3-linux.zip && \
+    unzip -q android-tools-sdk.zip && \
+    rm -f android-tools-sdk.zip && \
     chown -R root. /opt
 
+# Install scss-lint to check scss code agreements
+RUN gem install scss_lint
+
 # Setup environment
-ENV PATH ${PATH}:${ANDROID_HOME}/tools:${ANDROID_HOME}/platform-tools:/opt/tools
+ENV PATH ${PATH}:${ANDROID_HOME}/tools:${ANDROID_HOME}/platform-tools
 
-# Install sdk elements
-COPY sh /opt/tools
-
-RUN ["/opt/tools/android-accept-licenses.sh", "android update sdk --all --no-ui --filter platform-tools,tools,build-tools-23.0.2,android-23,extra-android-support,extra-android-m2repository,extra-google-m2repository"]
-RUN unzip ${ANDROID_HOME}/temp/*.zip -d ${ANDROID_HOME}
+# Install Android SDK
+RUN yes Y | ${ANDROID_HOME}/tools/bin/sdkmanager "build-tools;25.0.2" "platforms;android-25" "platform-tools"
+RUN cordova telemetry off
 
 WORKDIR Sources
 EXPOSE 8100 35729

@@ -1,4 +1,6 @@
 [![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)](https://tldrlegal.com/license/mit-license#summary) [![Docker Hub](https://img.shields.io/badge/docker-ready-blue.svg)](https://registry.hub.docker.com/u/marcoturi/ionic) [![](https://badge.imagelayers.io/marcoturi/ionic:latest.svg)](https://imagelayers.io/?images=marcoturi/ionic:latest 'Get your own badge on imagelayers.io')
+[![](https://images.microbadger.com/badges/image/marcoturi/ionic-docker.svg)](https://microbadger.com/images/marcoturi/ionic-docker "Get your own image badge on microbadger.com")
+[![](https://images.microbadger.com/badges/version/marcoturi/ionic-docker.svg)](https://microbadger.com/images/marcoturi/ionic-docker "Get your own version badge on microbadger.com")
 
 # Ionic-docker
 A ionic 1/2 image to be used with Gitlab CI
@@ -11,10 +13,10 @@ A ionic 1/2 image to be used with Gitlab CI
 
 ### Features
 - Node
-- Npm
+- Npm or Yarn
 - Ionic
 - Cordova
-- android-23
+- Android sdk and build tools
 - Ready to run Google Chrome for e2e tests
 - Ruby 2.2 (usefull for scss-lint)
 - Yarn
