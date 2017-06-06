@@ -12,7 +12,7 @@ ENV DEBIAN_FRONTEND=noninteractive \
     # https://github.com/SeleniumHQ/docker-selenium/issues/87
     DBUS_SESSION_BUS_ADDRESS=/dev/null
 
-# Install basics
+# Install basics 
 RUN apt-get update &&  \
     apt-get install -y git wget curl unzip ruby build-essential xvfb && \
     curl -sL https://deb.nodesource.com/setup_6.x | bash - && \
