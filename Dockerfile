@@ -41,7 +41,7 @@ RUN apt-get update &&  \
 # Ruby
     apt-get update && apt-get install -y -q ruby && \
 
-#ANDROID STUFF
+# System libs for android enviroment
     echo ANDROID_HOME="${ANDROID_HOME}" >> /etc/environment && \
     dpkg --add-architecture i386 && \
     apt-get update && \
@@ -50,7 +50,7 @@ RUN apt-get update &&  \
     apt-get autoclean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
 
-# Install Android SDK
+# Install Android Tools
     mkdir  /opt/android-sdk-linux && cd /opt/android-sdk-linux && \
     wget --output-document=android-tools-sdk.zip --quiet https://dl.google.com/android/repository/tools_r25.2.3-linux.zip && \
     unzip -q android-tools-sdk.zip && \
