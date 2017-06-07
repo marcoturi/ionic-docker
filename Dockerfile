@@ -6,7 +6,7 @@ ENV DEBIAN_FRONTEND=noninteractive \
     NPM_VERSION=4.4.4 \
     IONIC_VERSION=3.3.0 \
     CORDOVA_VERSION=6.5.0 \
-    YARN_VERSION=0.24.5 \
+    YARN_VERSION=0.24.6 \
     # Fix for the issue with Selenium, as described here:
     # https://github.com/SeleniumHQ/docker-selenium/issues/87
     DBUS_SESSION_BUS_ADDRESS=/dev/null
@@ -40,7 +40,7 @@ RUN apt-get update &&  \
 # System libs for android enviroment
     echo ANDROID_HOME="${ANDROID_HOME}" >> /etc/environment && \
     dpkg --add-architecture i386 && \
-    apt-get update && \ 
+    apt-get update && \
     apt-get install -y --force-yes expect ant wget libc6-i386 lib32stdc++6 lib32gcc1 lib32ncurses5 lib32z1 qemu-kvm kmod && \
     apt-get clean && \
     apt-get autoclean && \
@@ -57,7 +57,7 @@ RUN apt-get update &&  \
 ENV PATH ${PATH}:${ANDROID_HOME}/tools:${ANDROID_HOME}/platform-tools
 
 # Install Android SDK
-RUN yes Y | ${ANDROID_HOME}/tools/bin/sdkmanager "build-tools;25.0.2" "platforms;android-25" "platform-tools" 
+RUN yes Y | ${ANDROID_HOME}/tools/bin/sdkmanager "build-tools;25.0.2" "platforms;android-25" "platform-tools"
 RUN cordova telemetry off
 
 WORKDIR Sources
