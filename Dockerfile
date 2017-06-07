@@ -1,13 +1,13 @@
 FROM debian:jessie
-MAINTAINER marco [dot] turi [at] hotmail [dot] it
+MAINTAINER ok [at] procoders [dot] tech
 
 ENV DEBIAN_FRONTEND=noninteractive \
     ANDROID_HOME=/opt/android-sdk-linux \
-    NODE_VERSION=6.10.1 \
-    NPM_VERSION=5.0.1 \
-    IONIC_VERSION=3.3.0 \
-    CORDOVA_VERSION=6.4.0 \
-    YARN_VERSION=0.24.5 \
+    NODE_VERSION=6.10.0 \
+    NPM_VERSION=3.10.10 \
+    IONIC_VERSION=2.2.1 \
+    CORDOVA_VERSION=6.5.0 \
+    YARN_VERSION=0.21.3 \
     # Fix for the issue with Selenium, as described here:
     # https://github.com/SeleniumHQ/docker-selenium/issues/87
     DBUS_SESSION_BUS_ADDRESS=/dev/null
@@ -44,7 +44,7 @@ RUN apt-get update &&  \
 # System libs for android enviroment
     echo ANDROID_HOME="${ANDROID_HOME}" >> /etc/environment && \
     dpkg --add-architecture i386 && \
-    apt-get update && \
+    apt-get update && \ 
     apt-get install -y --force-yes expect ant wget libc6-i386 lib32stdc++6 lib32gcc1 lib32ncurses5 lib32z1 qemu-kvm kmod && \
     apt-get clean && \
     apt-get autoclean && \
@@ -64,7 +64,7 @@ RUN gem install scss_lint
 ENV PATH ${PATH}:${ANDROID_HOME}/tools:${ANDROID_HOME}/platform-tools
 
 # Install Android SDK
-RUN yes Y | ${ANDROID_HOME}/tools/bin/sdkmanager "build-tools;25.0.2" "platforms;android-25" "platform-tools"
+RUN yes Y | ${ANDROID_HOME}/tools/bin/sdkmanager "build-tools;25.0.2" "platforms;android-25" "platform-tools" 
 RUN cordova telemetry off
 
 WORKDIR Sources
