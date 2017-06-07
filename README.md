@@ -66,7 +66,7 @@ ionic cordova build android
 ionic cordova run android
 ```
 
-##FAQ
+### FAQ
 * The application is not installed on my android device
     * Try `docker run -ti --rm -p 8100:8100 -p 35729:35729 --privileged -v /dev/bus/usb:/dev/bus/usb -v \$PWD:/myApp:rw marcoturi/ionic adb devices` your device should appear
 * The adb devices show nothing whereas I can see it when I do `adb devices` on my computer
