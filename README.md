@@ -1,11 +1,10 @@
-[![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)](https://tldrlegal.com/license/mit-license#summary) [![Docker Hub](https://img.shields.io/badge/docker-ready-blue.svg)](https://registry.hub.docker.com/u/marcoturi/ionic) [![](https://badge.imagelayers.io/marcoturi/ionic:latest.svg)](https://imagelayers.io/?images=marcoturi/ionic:latest 'Get your own badge on imagelayers.io')
-[![](https://images.microbadger.com/badges/image/marcoturi/ionic-docker.svg)](https://microbadger.com/images/marcoturi/ionic-docker "Get your own image badge on microbadger.com")
-[![](https://images.microbadger.com/badges/version/marcoturi/ionic-docker.svg)](https://microbadger.com/images/marcoturi/ionic-docker "Get your own version badge on microbadger.com")
+[![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)](https://tldrlegal.com/license/mit-license#summary) [![Docker Hub](https://img.shields.io/badge/docker-ready-blue.svg)](https://registry.hub.docker.com/u/marcoturi/ionic) [![](https://images.microbadger.com/badges/image/marcoturi/ionic.svg)](https://microbadger.com/images/marcoturi/ionic "Get your own image badge on microbadger.com") [![](https://images.microbadger.com/badges/version/marcoturi/ionic.svg)](https://microbadger.com/images/marcoturi/ionic "Get your own version badge on microbadger.com")
 
 # Ionic-docker
 A ionic 1/2 image to be used with Gitlab CI
 
 ### Inspired by:
+- https://github.com/procoders/ionic-docker
 - https://hub.docker.com/r/webnicer/protractor-headless/~/dockerfile/
 - https://github.com/agileek/docker
 - http://stackoverflow.com/questions/29558444/angularjs-grunt-bower-gitlab-ci-setup-for-testing
@@ -17,9 +16,9 @@ A ionic 1/2 image to be used with Gitlab CI
 - Ionic
 - Cordova
 - Android sdk and build tools
-- Ready to run Google Chrome for e2e tests
-- Ruby 2.2 (usefull for scss-lint)
-- Yarn
+- Ready to run Google Chrome Headless for e2e tests
+- Ruby
+- Scss-lint support
 
 ##Usage
 
@@ -62,13 +61,13 @@ You can test on your android device, just make sure that debugging is enabled.
 
 ```bash
 cd myApp
-ionic platform add android
-ionic build android
-ionic run android
+ionic cordova platform add android
+ionic cordova build android
+ionic cordova run android
 ```
 
 ##FAQ
-    * The application is not installed on my android device
-        * Try `docker run -ti --rm -p 8100:8100 -p 35729:35729 --privileged -v /dev/bus/usb:/dev/bus/usb -v \$PWD:/myApp:rw agileek/ionic-framework adb devices` your device should appear
-    * The adb devices show nothing whereas I can see it when I do `adb devices` on my computer
-        * You can't have adb inside and outside docker at the same time, be sure to `adb kill-server` on your computer before using this image
+* The application is not installed on my android device
+    * Try `docker run -ti --rm -p 8100:8100 -p 35729:35729 --privileged -v /dev/bus/usb:/dev/bus/usb -v \$PWD:/myApp:rw marcoturi/ionic adb devices` your device should appear
+* The adb devices show nothing whereas I can see it when I do `adb devices` on my computer
+    * You can't have adb inside and outside docker at the same time, be sure to `adb kill-server` on your computer before using this image
