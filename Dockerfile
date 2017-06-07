@@ -1,13 +1,13 @@
 FROM debian:jessie
-MAINTAINER ok [at] procoders [dot] tech
+MAINTAINER marco [dot] turi [at] hotmail [dot] it
 
 ENV DEBIAN_FRONTEND=noninteractive \
     ANDROID_HOME=/opt/android-sdk-linux \
-    NODE_VERSION=6.10.0 \
-    NPM_VERSION=3.10.10 \
-    IONIC_VERSION=2.2.1 \
+    NODE_VERSION=6.11.0 \
+    NPM_VERSION=5.0.1 \
+    IONIC_VERSION=3.3.0 \
     CORDOVA_VERSION=6.5.0 \
-    YARN_VERSION=0.21.3 \
+    YARN_VERSION=0.24.5 \
     # Fix for the issue with Selenium, as described here:
     # https://github.com/SeleniumHQ/docker-selenium/issues/87
     DBUS_SESSION_BUS_ADDRESS=/dev/null
