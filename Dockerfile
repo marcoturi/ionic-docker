@@ -3,8 +3,7 @@ MAINTAINER marco [dot] turi [at] hotmail [dot] it
 
 ENV DEBIAN_FRONTEND=noninteractive \
     ANDROID_HOME=/opt/android-sdk-linux \
-    NODE_VERSION=6.11.0 \
-    NPM_VERSION=5.0.1 \
+    NPM_VERSION=4.4.4 \
     IONIC_VERSION=3.3.0 \
     CORDOVA_VERSION=6.5.0 \
     YARN_VERSION=0.24.5 \
@@ -20,7 +19,7 @@ RUN apt-get update &&  \
     apt-get install -y nodejs && \
     npm install -g npm@"$NPM_VERSION" cordova@"$CORDOVA_VERSION" ionic@"$IONIC_VERSION" yarn@"$YARN_VERSION" && \
     npm cache clear && \
-    gem install sass && \
+    gem install sass scss_lint && \
     wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb && \
     dpkg --unpack google-chrome-stable_current_amd64.deb && \
     apt-get install -f -y && \
@@ -38,9 +37,6 @@ RUN apt-get update &&  \
     echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | /usr/bin/debconf-set-selections && \
     apt-get update && apt-get -y install oracle-java8-installer && \
 
-# Ruby
-    apt-get update && apt-get install -y -q ruby && \
-
 # System libs for android enviroment
     echo ANDROID_HOME="${ANDROID_HOME}" >> /etc/environment && \
     dpkg --add-architecture i386 && \
@@ -56,9 +52,6 @@ RUN apt-get update &&  \
     unzip -q android-tools-sdk.zip && \
     rm -f android-tools-sdk.zip && \
     chown -R root. /opt
-
-# Install scss-lint to check scss code agreements
-RUN gem install scss_lint
 
 # Setup environment
 ENV PATH ${PATH}:${ANDROID_HOME}/tools:${ANDROID_HOME}/platform-tools
