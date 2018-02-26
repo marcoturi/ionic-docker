@@ -7,6 +7,7 @@ ENV DEBIAN_FRONTEND=noninteractive \
     IONIC_VERSION=3.19.0 \
     CORDOVA_VERSION=7.1.0 \
     YARN_VERSION=1.3.2 \
+    GRADLE_VERSION=4.4.1 \
     # Fix for the issue with Selenium, as described here:
     # https://github.com/SeleniumHQ/docker-selenium/issues/87
     DBUS_SESSION_BUS_ADDRESS=/dev/null
@@ -51,10 +52,16 @@ RUN apt-get update &&  \
     wget --output-document=android-tools-sdk.zip --quiet https://dl.google.com/android/repository/tools_r25.2.3-linux.zip && \
     unzip -q android-tools-sdk.zip && \
     rm -f android-tools-sdk.zip && \
+
+# Install Gradle
+    mkdir  /opt/gradle && cd /opt/gradle && \
+    wget --output-document=gradle.zip --quiet https://services.gradle.org/distributions/gradle-"$GRADLE_VERSION"-bin.zip && \
+    unzip -q gradle.zip && \
+    rm -f gradle.zip && \
     chown -R root. /opt
 
 # Setup environment
-ENV PATH ${PATH}:${ANDROID_HOME}/tools:${ANDROID_HOME}/platform-tools
+ENV PATH ${PATH}:${ANDROID_HOME}/tools:${ANDROID_HOME}/platform-tools:/opt/gradle/gradle-${GRADLE_VERSION}/bin
 
 # Install Android SDK
 RUN yes Y | ${ANDROID_HOME}/tools/bin/sdkmanager "build-tools;25.0.2" "platforms;android-25" "platform-tools"
