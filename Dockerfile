@@ -3,10 +3,10 @@ MAINTAINER marco [dot] turi [at] hotmail [dot] it
 
 ENV DEBIAN_FRONTEND=noninteractive \
     ANDROID_HOME=/opt/android-sdk-linux \
-    NPM_VERSION=5.5.1 \
-    IONIC_VERSION=3.19.0 \
-    CORDOVA_VERSION=7.1.0 \
-    YARN_VERSION=1.3.2 \
+    NPM_VERSION=6.0.1 \
+    IONIC_VERSION=3.20.0 \
+    CORDOVA_VERSION=8.0.0 \
+    YARN_VERSION=1.6.0 \
     GRADLE_VERSION=4.4.1 \
     # Fix for the issue with Selenium, as described here:
     # https://github.com/SeleniumHQ/docker-selenium/issues/87
@@ -14,13 +14,12 @@ ENV DEBIAN_FRONTEND=noninteractive \
 
 # Install basics
 RUN apt-get update &&  \
-    apt-get install -y git wget curl unzip ruby ruby-dev build-essential && \
-    curl -sL https://deb.nodesource.com/setup_6.x | bash - && \
+    apt-get install -y git wget curl unzip build-essential && \
+    curl -sL https://deb.nodesource.com/setup_8.x | bash - && \
     apt-get update &&  \
     apt-get install -y nodejs && \
     npm install -g npm@"$NPM_VERSION" cordova@"$CORDOVA_VERSION" ionic@"$IONIC_VERSION" yarn@"$YARN_VERSION" && \
     npm cache clear --force && \
-    gem install sass scss_lint && \
     wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb && \
     dpkg --unpack google-chrome-stable_current_amd64.deb && \
     apt-get install -f -y && \
