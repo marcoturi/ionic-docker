@@ -3,11 +3,11 @@ MAINTAINER marco [dot] turi [at] hotmail [dot] it
 
 ENV DEBIAN_FRONTEND=noninteractive \
     ANDROID_HOME=/opt/android-sdk-linux \
-    NPM_VERSION=6.5.0 \
-    IONIC_VERSION=4.5.0 \
-    CORDOVA_VERSION=8.1.2 \
-    YARN_VERSION=1.12.3 \
-    GRADLE_VERSION=4.10.3 \
+    NPM_VERSION=6.11.3 \
+    IONIC_VERSION=5.2.8 \
+    CORDOVA_VERSION=9.0.0 \
+    YARN_VERSION=1.17.3 \
+    GRADLE_VERSION=5.6.2 \
     # Fix for the issue with Selenium, as described here:
     # https://github.com/SeleniumHQ/docker-selenium/issues/87
     DBUS_SESSION_BUS_ADDRESS=/dev/null
@@ -48,7 +48,7 @@ RUN apt-get update &&  \
 
 # Install Android Tools
     mkdir  /opt/android-sdk-linux && cd /opt/android-sdk-linux && \
-    wget --output-document=android-tools-sdk.zip --quiet https://dl.google.com/android/repository/tools_r25.2.3-linux.zip && \
+    wget --output-document=android-tools-sdk.zip --quiet https://dl.google.com/android/repository/tools_r26.1.1-linux.zip && \
     unzip -q android-tools-sdk.zip && \
     rm -f android-tools-sdk.zip && \
 
@@ -63,7 +63,7 @@ RUN apt-get update &&  \
 ENV PATH ${PATH}:${ANDROID_HOME}/tools:${ANDROID_HOME}/platform-tools:/opt/gradle/gradle-${GRADLE_VERSION}/bin
 
 # Install Android SDK
-RUN yes Y | ${ANDROID_HOME}/tools/bin/sdkmanager "build-tools;25.0.2" "platforms;android-25" "platform-tools"
+RUN yes Y | ${ANDROID_HOME}/tools/bin/sdkmanager "build-tools;29.0.2" "platforms;android-29" "platform-tools"
 RUN cordova telemetry off
 
 WORKDIR Sources
