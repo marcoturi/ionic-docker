@@ -26,19 +26,19 @@ RUN apt-get update &&  \
     apt-get clean && \
     rm google-chrome-stable_current_amd64.deb && \
     mkdir Sources && \
-    mkdir -p /root/.cache/yarn/ && \
+    mkdir -p /root/.cache/yarn/
 
 # Font libraries
     apt-get -qqy install fonts-ipafont-gothic xfonts-100dpi xfonts-75dpi xfonts-cyrillic xfonts-scalable libfreetype6 libfontconfig && \
 
-# install python-software-properties (so you can do add-apt-repository)
-#    apt-get update && apt-get install -y -q python-software-properties software-properties-common  && \
-#    add-apt-repository "deb http://ppa.launchpad.net/webupd8team/java/ubuntu xenial main" -y && \
-#    echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | /usr/bin/debconf-set-selections && \
-#    apt-get update && apt-get -y install oracle-java8-installer && \
+## JAVA INSTALLATION
+RUN echo "oracle-java8-installer shared/accepted-oracle-license-v1-1 select true" | debconf-set-selections
+RUN echo "deb http://ppa.launchpad.net/webupd8team/java/ubuntu trusty main" > /etc/apt/sources.list.d/webupd8team-java-trusty.list
+RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys EEA14886
+RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y --force-yes --no-install-recommends oracle-java8-installer && apt-get clean all
 
 # System libs for android enviroment
-    echo ANDROID_HOME="${ANDROID_HOME}" >> /etc/environment && \
+RUN echo ANDROID_HOME="${ANDROID_HOME}" >> /etc/environment && \
     dpkg --add-architecture i386 && \
     apt-get update && \
     apt-get install -y --force-yes expect ant wget libc6-i386 lib32stdc++6 lib32gcc1 lib32ncurses5 lib32z1 qemu-kvm kmod && \
