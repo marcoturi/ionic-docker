@@ -14,7 +14,7 @@ ENV DEBIAN_FRONTEND=noninteractive \
 
 # Install basics
 RUN apt-get update &&  \
-    apt-get install -y git wget curl unzip build-essential && \
+    apt-get install -y git wget curl unzip build-essential openjdk-8-jdk openjdk-8-jre && \
     curl -sL https://deb.nodesource.com/setup_10.x | bash - && \
     apt-get update &&  \
     apt-get install -y nodejs && \
@@ -32,10 +32,10 @@ RUN apt-get update &&  \
     apt-get -qqy install fonts-ipafont-gothic xfonts-100dpi xfonts-75dpi xfonts-cyrillic xfonts-scalable libfreetype6 libfontconfig && \
 
 # install python-software-properties (so you can do add-apt-repository)
-    apt-get update && apt-get install -y -q python-software-properties software-properties-common  && \
-    add-apt-repository "deb http://ppa.launchpad.net/webupd8team/java/ubuntu xenial main" -y && \
-    echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | /usr/bin/debconf-set-selections && \
-    apt-get update && apt-get -y install oracle-java8-installer && \
+#    apt-get update && apt-get install -y -q python-software-properties software-properties-common  && \
+#    add-apt-repository "deb http://ppa.launchpad.net/webupd8team/java/ubuntu xenial main" -y && \
+#    echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | /usr/bin/debconf-set-selections && \
+#    apt-get update && apt-get -y install oracle-java8-installer && \
 
 # System libs for android enviroment
     echo ANDROID_HOME="${ANDROID_HOME}" >> /etc/environment && \
