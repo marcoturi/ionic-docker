@@ -14,7 +14,7 @@ ENV DEBIAN_FRONTEND=noninteractive \
 
 # Install basics
 RUN apt-get update &&  \
-    apt-get install -y git wget curl unzip build-essential openjdk-8-jdk openjdk-8-jre && \
+    apt-get install -y git wget curl unzip build-essential && \
     curl -sL https://deb.nodesource.com/setup_10.x | bash - && \
     apt-get update &&  \
     apt-get install -y nodejs && \
@@ -35,7 +35,6 @@ RUN echo "oracle-java8-installer shared/accepted-oracle-license-v1-1 select true
 RUN echo "deb http://ppa.launchpad.net/webupd8team/java/ubuntu trusty main" > /etc/apt/sources.list.d/webupd8team-java-trusty.list
 RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys EEA14886
 RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y --force-yes --no-install-recommends oracle-java8-installer && apt-get clean all
-
 # System libs for android enviroment
 RUN echo ANDROID_HOME="${ANDROID_HOME}" >> /etc/environment && \
     dpkg --add-architecture i386 && \
