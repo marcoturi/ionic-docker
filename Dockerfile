@@ -7,6 +7,8 @@ ENV IONIC_VERSION=5.2.8 \
 RUN sed -i -e 's/v3.9/edge/g' /etc/apk/repositories \
     && apk add --no-cache \
     build-base \
+    git \
+    bash \
     openjdk8-jre-base \
     # chromium dependencies
     nss \
