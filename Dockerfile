@@ -26,10 +26,9 @@ RUN apt-get update &&  \
     apt-get clean && \
     rm google-chrome-stable_current_amd64.deb && \
     mkdir Sources && \
-    mkdir -p /root/.cache/yarn/
-
-# Font libraries
-    apt-get -qqy install fonts-ipafont-gothic xfonts-100dpi xfonts-75dpi xfonts-cyrillic xfonts-scalable libfreetype6 libfontconfig && \
+    mkdir -p /root/.cache/yarn/ && \
+    # Font libraries
+    apt-get -qqy install fonts-ipafont-gothic xfonts-100dpi xfonts-75dpi xfonts-cyrillic xfonts-scalable libfreetype6 libfontconfig
 
 ## JAVA INSTALLATION
 RUN echo "oracle-java8-installer shared/accepted-oracle-license-v1-1 select true" | debconf-set-selections
