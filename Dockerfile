@@ -1,7 +1,7 @@
-FROM node:10
+FROM node:12
 MAINTAINER marco [dot] turi [at] hotmail [dot] it
 
-ENV IONIC_VERSION=5.2.8 \
+ENV IONIC_VERSION=5.4.4 \
     CORDOVA_VERSION=9.0.0
 
 RUN apt-get -qq update -y
@@ -30,3 +30,4 @@ RUN apt-get -qq update -y && apt-get -qq install -y \
     default-jre
 
 ENV DISPLAY=":99"
+ENV CHROME_BIN /usr/bin/chromium-browser
