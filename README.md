@@ -20,7 +20,7 @@ A ionic 1/2 image to be used with Gitlab CI
 - Ruby
 - Scss-lint support
 
-##Usage
+## Usage
 
 ```
 docker run -ti --rm -p 8100:8100 -p 35729:35729 marcoturi/ionic
