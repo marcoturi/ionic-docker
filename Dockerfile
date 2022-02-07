@@ -12,6 +12,10 @@ ENV DEBIAN_FRONTEND=noninteractive \
     ANDROID_BUILD_TOOLS=30.0.3 \
     DBUS_SESSION_BUS_ADDRESS=/dev/null
 
+RUN echo "America/Sao_Paulo" > /etc/timezone
+RUN dpkg-reconfigure -f noninteractive tzdata
+RUN date
+
 # Install basics
 RUN apt-get update &&  \
     apt-get install -y git wget curl unzip build-essential jq && \
@@ -34,6 +38,8 @@ RUN echo "LC_ALL=en_US.UTF-8" >> /etc/environment
 RUN echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen
 RUN echo "LANG=en_US.UTF-8" > /etc/locale.conf
 RUN locale-gen en_US.UTF-8
+
+
 
 ## JAVA INSTALLATION
 RUN echo "deb http://archive.debian.org/debian/ jessie-backports main" >> /etc/apt/sources.list
