@@ -1,3 +1,5 @@
+[![Docker Hub](https://img.shields.io/badge/docker-ready-blue.svg)](https://hub.docker.com/r/sidibecker/ionic-ci)
+
 # Ionic Docker
 A environment image to be used with Gitlab CI
 
