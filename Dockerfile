@@ -1,4 +1,4 @@
-FROM debian:jessie
+FROM  adoptopenjdk/openjdk11:alpine
 MAINTAINER sidibecker [at] hotmail [dot] com
 
 ENV DEBIAN_FRONTEND=noninteractive \
@@ -8,22 +8,27 @@ ENV DEBIAN_FRONTEND=noninteractive \
     IONIC_VERSION=latest \
     CORDOVA_VERSION=10.0.0 \
     GRADLE_VERSION=7.1.1 \
-    ANDROID_COMPILE_SDK=30 \
-    ANDROID_BUILD_TOOLS=30.0.3 \
+    ANDROID_COMPILE_SDK=31 \
+    ANDROID_BUILD_TOOLS=32.0.0 \
     DBUS_SESSION_BUS_ADDRESS=/dev/null
 
+
+RUN ls
+#RUN dpkg-reconfigure -f noninteractive tzdata
+RUN apk add tzdata
+RUN cp /usr/share/zoneinfo/America/Sao_Paulo /etc/localtime
 RUN echo "America/Sao_Paulo" > /etc/timezone
-RUN dpkg-reconfigure -f noninteractive tzdata
 RUN date
 
 # Install basics
-RUN apt-get update &&  \
-    apt-get install -y git wget curl unzip build-essential jq && \
-    curl -sL https://deb.nodesource.com/setup_"$NODE_VERSION" -o nodesource_setup.sh && \
-    chmod 777 nodesource_setup.sh && \
-    ./nodesource_setup.sh \
-    apt-get update &&  \
-    apt-get install -y --force-yes nodejs && \
+RUN apk update 
+RUN apk add --no-cache --upgrade bash
+
+RUN apk add --virtual build-dependencies
+RUN apk add git wget curl unzip jq 
+RUN apk add npm
+RUN apk update &&  \
+    apk add nodejs && \
     npm install -g \ 
     npm@"$NPM_VERSION" \
     cordova@"$CORDOVA_VERSION" \
@@ -33,33 +38,52 @@ RUN apt-get update &&  \
     mkdir -p /root/.cache/yarn/  
 
 # Set the locale
-RUN apt-get clean && apt-get update && apt-get install -y locales
+#RUN apk add locales
 RUN echo "LC_ALL=en_US.UTF-8" >> /etc/environment
 RUN echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen
 RUN echo "LANG=en_US.UTF-8" > /etc/locale.conf
-RUN locale-gen en_US.UTF-8
+#RUN locale-gen en_US.UTF-8
+ENV LANG en_US.UTF-8
+ENV LANGUAGE en_US.UTF-8
+ENV LC_ALL en_US.UTF-8
 
 
 
 ## JAVA INSTALLATION
-RUN echo "deb http://archive.debian.org/debian/ jessie-backports main" >> /etc/apt/sources.list
-RUN apt-get -o Acquire::Check-Valid-Until=false update && DEBIAN_FRONTEND=noninteractive apt-get install -y -t jessie-backports --force-yes --no-install-recommends openjdk-8-jdk-headless openjdk-8-jre-headless ca-certificates-java && apt-get clean all
+#RUN echo "deb http://archive.debian.org/debian/ jessie-backports main" >> /etc/apt/sources.list
+#RUN add-apt-repository ppa:openjdk-r/ppa
+#RUN apk update
+#RUN apk -o Acquire::Check-Valid-Until=false update && DEBIAN_FRONTEND=noninteractive apk add -y -t jessie-backports --force-yes --no-install-recommends openjdk-11-jdk ca-certificates-java && apk clean all
+RUN java -version
 
+RUN apk add libstdc++6
+#RUN apk add libc6-compat
 # System libs for android enviroment
 RUN echo ANDROID_HOME="${ANDROID_HOME}" >> /etc/environment && \
-    dpkg --add-architecture i386 && \
-    apt-get update -o Acquire::Check-Valid-Until=false && \
-    apt-get install -y --force-yes -t jessie-backports expect ant wget libc6-i386 lib32stdc++6 lib32gcc1 lib32ncurses5 lib32z1 qemu-kvm kmod
+    #dpkg --add-architecture i386 && \
+    #apk update -o Acquire::Check-Valid-Until=false && \
+    apk add \
+    expect \ 
+    apache-ant \
+     wget \
+     # libc6-compat  \
+        libgcc \ 
+        #ncurses5 \
+         #zlib-dev \
+          qemu \ 
+         kmod
 
-RUN apt-get clean && \
-    apt-get autoclean && \
-    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+RUN 
+#apk clean && \
+   # apk autoclean && \
+RUN    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-RUN sed 's/deb http:\/\/archive.debian.org\/debian\/ jessie-backports main//g' /etc/apt/sources.list > /etc/apt/sources.list
+
+#RUN sed 's/deb http:\/\/archive.debian.org\/debian\/ jessie-backports main//g' /etc/apt/sources.list > /etc/apt/sources.list
 
 # Install Android Tools
 RUN    mkdir  /opt/android-sdk-linux && cd /opt/android-sdk-linux && \
-    wget --output-document=android-tools-sdk.zip --quiet https://dl.google.com/android/repository/sdk-tools-linux-4333796.zip && \
+    wget --output-document=android-tools-sdk.zip --quiet https://dl.google.com/android/repository/commandlinetools-linux-8512546_latest.zip && \
     unzip -q android-tools-sdk.zip && \
     rm -f android-tools-sdk.zip
 
@@ -71,9 +95,9 @@ RUN    mkdir  /opt/gradle && cd /opt/gradle && \
     chown -R root. /opt
 
 # Setup environment
-ENV PATH ${PATH}:${ANDROID_HOME}/tools:${ANDROID_HOME}/platform-tools:/opt/gradle/gradle-${GRADLE_VERSION}/bin
+ENV PATH ${PATH}:${ANDROID_HOME}/cmdline-tools:${ANDROID_HOME}/cmdline-tools/bin:${ANDROID_HOME}/platform-tools:/opt/gradle/gradle-${GRADLE_VERSION}/bin
 
 # Install Android SDK
-RUN yes Y | ${ANDROID_HOME}/tools/bin/sdkmanager "build-tools;$ANDROID_BUILD_TOOLS" "platforms;android-$ANDROID_COMPILE_SDK" "platform-tools"
+RUN yes Y | ${ANDROID_HOME}/cmdline-tools/bin/sdkmanager --sdk_root="${ANDROID_HOME}/cmdline-tools" "build-tools;$ANDROID_BUILD_TOOLS" "platforms;android-$ANDROID_COMPILE_SDK" "platform-tools"
 
 WORKDIR Sources
