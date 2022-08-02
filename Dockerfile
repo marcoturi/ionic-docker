@@ -56,6 +56,14 @@ ENV LC_ALL en_US.UTF-8
 #RUN apk -o Acquire::Check-Valid-Until=false update && DEBIAN_FRONTEND=noninteractive apk add -y -t jessie-backports --force-yes --no-install-recommends openjdk-11-jdk ca-certificates-java && apk clean all
 RUN java -version
 
+# Python instalation
+RUN apk add --update util-linux
+RUN apk add --update --no-cache python3 && ln -sf python3 /usr/bin/python 
+RUN python3 -m ensurepip
+RUN pip3 install --no-cache --upgrade pip
+RUN pip install pillow
+
+
 RUN apk add libstdc++6
 #RUN apk add libc6-compat
 # System libs for android enviroment
