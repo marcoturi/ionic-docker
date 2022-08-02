@@ -13,4 +13,5 @@ A environment image to be used with Gitlab CI
 - Cordova
 - Android sdk and build tools
 - Ruby
-- Scss-lint support
+- Scss-lint supports
+- Python3 and PIL library
